@@ -2,9 +2,10 @@
   "name": "skillhire",
   "version": "1.0.0",
   "description": "Skillhire full stack test",
-  "main": "index.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "test": "export NODE_ENV=test && ./node_modules/mocha/bin/mocha backend/**/*.test.js"
   },
   "keywords": [],
   "author": "",
