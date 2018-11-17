@@ -72,7 +72,7 @@ describe('PATCH /todos/:id', () => {
 
     it('should update the todo', (done) => {
         var id = todos[1]._id.toHexString();
-        var payload = {task: 'Finish skillhire task', updatedAt: 12345, updatedAt: 12345};
+        var payload = {task: 'Finish skillhire task', updatedAt: 12345, updatedAt: 12345, status: STATUS_COMPLETED};
         request(app)
             .patch(`/todos/${id}`)
             .send(payload)
@@ -80,7 +80,6 @@ describe('PATCH /todos/:id', () => {
             .expect((res) => {
                 expect(res.body.todo.task).toBe(payload.task);
                 expect(res.body.todo.updatedAt).toBeA('number');
-                expect(res.body.todo.completedAt).toBeA('number');
                 expect(res.body.todo.status).toBe(STATUS_COMPLETED);
             }).end(done);
 
@@ -94,7 +93,7 @@ describe('PATCH /todos/:id', () => {
     }); 
 
 
-    it('should clear completedAt when todo is not completed', (done) => {
+    it('should set status to pending when todo is not completed', (done) => {
 
         var id = todos[0]._id.toHexString();
         var payload = {task: 'Work on the task!!!', status: STATUS_PENDING};
@@ -105,7 +104,6 @@ describe('PATCH /todos/:id', () => {
             .expect((res) => {
                 expect(res.body.todo.task).toBe(payload.task);
                 expect(res.body.todo.status).toBe(STATUS_PENDING);
-                expect(res.body.todo.completedAt).toNotExist();
                 expect(res.body.todo.updatedAt).toBeA('number');
             }).end(done);
     });
