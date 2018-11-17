@@ -2,7 +2,7 @@ const expect = require('expect');
 const request = require('supertest');
 
 const {app} = require('./../server');
-const {Todo} = require('./../models/todo');
+const {Todo, STATUS_PENDING} = require('./../models/todo');
 const {todos, makeTodos} = require('./seed/todo');
 
 beforeEach(makeTodos);
@@ -25,6 +25,9 @@ describe('POST /todos', () => {
                 Todo.find({task}).then((todos) => {
                     expect(todos.length).toBe(1);
                     expect(todos[0].task).toBe(task);
+                    expect(todos[0].updatedAt).toBe(null);
+                    expect(todos[0].createdAt).toBe(null);
+                    expect(todos[0].status).toBe(STATUS_PENDING);
                     done();
                 }).catch((err) => done(err));
             });
