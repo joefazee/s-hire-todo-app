@@ -1,5 +1,6 @@
 const expect = require('expect');
 const request = require('supertest');
+const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Todo, STATUS_PENDING, STATUS_COMPLETED} = require('./../models/todo');
@@ -26,7 +27,7 @@ describe('POST /todos', () => {
                     expect(todos.length).toBe(1);
                     expect(todos[0].task).toBe(task);
                     expect(todos[0].updatedAt).toBe(null);
-                    expect(todos[0].createdAt).toBe(null);
+                    expect(todos[0].createdAt).toBeA('number');
                     expect(todos[0].status).toBe(STATUS_PENDING);
                     done();
                 }).catch((err) => done(err));
@@ -108,4 +109,45 @@ describe('PATCH /todos/:id', () => {
             }).end(done);
     });
 
+});
+
+describe('DELETE /todos/:id', () => {
+
+    it('should delete a todo', (done) => {
+            var hexId  = todos[0]._id.toHexString();
+
+
+            request(app)
+                .delete(`/todos/${hexId}`)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.todo._id).toBe(hexId);
+                }).end((err, res) => {
+                    if(err) {
+                        return done(err);
+                    }
+
+                    Todo.findById(hexId).then((todo) => {
+                            expect(todo).toNotExist();
+                            done();
+                    }).catch((err) => done(err));
+
+                });
+    });
+
+    it('should return 404 if todo not found', (done) => {
+        var hexId = new ObjectID().toHexString();
+        request(app)
+            .delete(`/todos/${hexId}`)
+            .expect(404)
+            .end(done);
+    }); 
+
+    it('should return 404 for non-object id', (done) => {
+        request(app)
+            .delete('/todos/123')
+            .expect(404)
+            .end(done);
+    }); 
+   
 });
