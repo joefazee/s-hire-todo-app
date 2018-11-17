@@ -28,4 +28,8 @@ var TodoScheme = new mongoose.Schema({
 
 var Todo = mongoose.model('Todo', TodoScheme);
 
-module.exports = {Todo};
+module.exports = {
+    Todo, 
+    STATUS_PENDING, 
+    STATUS_COMPLETED
+};
