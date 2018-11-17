@@ -33,4 +33,22 @@ describe('POST /todos', () => {
             });
     });
 
+    it('should not create a new todo with invalid data', (done) => {
+
+        request(app)
+            .post('/todos')
+            .send({})
+            .expect(400)
+            .end((err, res) => {
+                if(err) {
+                    return done(err);
+                }
+
+                Todo.find().then((todos) => {
+                    expect(todos.length).toBe(3); // this is the default we started with
+                    done();
+                }).catch((err) => done(err));
+            });
+    });
+
 });
