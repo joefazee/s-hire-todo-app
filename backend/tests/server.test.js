@@ -2,7 +2,7 @@ const expect = require('expect');
 const request = require('supertest');
 
 const {app} = require('./../server');
-const {Todo, STATUS_PENDING} = require('./../models/todo');
+const {Todo, STATUS_PENDING, STATUS_COMPLETED} = require('./../models/todo');
 const {todos, makeTodos} = require('./seed/todo');
 
 beforeEach(makeTodos);
@@ -65,4 +65,49 @@ describe('GET /todos', () => {
                 expect(res.body.todos.length).toBe(3);
             }).end(done);
     });
+});
+
+
+describe('PATCH /todos/:id', () => {
+
+    it('should update the todo', (done) => {
+        var id = todos[1]._id.toHexString();
+        var payload = {task: 'Finish skillhire task', updatedAt: 12345, updatedAt: 12345};
+        request(app)
+            .patch(`/todos/${id}`)
+            .send(payload)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.task).toBe(payload.task);
+                expect(res.body.todo.updatedAt).toBeA('number');
+                expect(res.body.todo.completedAt).toBeA('number');
+                expect(res.body.todo.status).toBe(STATUS_COMPLETED);
+            }).end(done);
+
+    });
+
+    it('should return 404 for non-object id', (done) => {
+        request(app)
+            .patch('/todos/123')
+            .expect(404)
+            .end(done);
+    }); 
+
+
+    it('should clear completedAt when todo is not completed', (done) => {
+
+        var id = todos[0]._id.toHexString();
+        var payload = {task: 'Work on the task!!!', status: STATUS_PENDING};
+        request(app)
+            .patch(`/todos/${id}`)
+            .send(payload)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.task).toBe(payload.task);
+                expect(res.body.todo.status).toBe(STATUS_PENDING);
+                expect(res.body.todo.completedAt).toNotExist();
+                expect(res.body.todo.updatedAt).toBeA('number');
+            }).end(done);
+    });
+
 });
