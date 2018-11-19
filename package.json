@@ -9,6 +9,7 @@
     "test-watch": "nodemon --exec \"npm test\"",
     "start-watch": "nodemon --exec \"npm start\"",
     "babel-build": "babel frontend/src/app.js --out-file=public/js/app.js --presets=env,react",
+    "build:prod": "webpack -p --env production",
     "build": "webpack && npm run start"
   },
   "keywords": [],
