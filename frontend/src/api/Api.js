@@ -26,3 +26,13 @@ export const removeTodo = (id) => {
              }).catch((err) => reject(err));
      });
  };
+
+ export const toggleTodo = (id) => {
+    
+    return new Promise((resolve, reject) => {
+         axios.patch(`/todos/toggle/${id}`)
+             .then((res) => {
+                 resolve(res.data.todo);
+             }).catch((err) => reject(err));
+     });
+ };

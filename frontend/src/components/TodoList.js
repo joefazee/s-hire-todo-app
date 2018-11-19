@@ -6,19 +6,13 @@ class TodoList extends React.Component {
     render() {
         var {todos} = this.props;
         var renderTodos = () => {
-            //var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
-            // if(todos.length === 0) {
-            //   return <p className="no-todo">Nothing to do</p>
-            // };
-            
              return todos.map((todo) => {
                return (
                   <Todo 
                     key={todo._id} {...todo} 
                     handleRemove={this.props.handleRemove}
-                    toggleTodo={this.props.toggleTodo}
-                     />
-                     
+                    toggleTodoStatus={this.props.toggleTodoStatus}
+                     />  
                );
              });
           };
@@ -32,7 +26,7 @@ class TodoList extends React.Component {
             </Table.Header>
         
             <Table.Body>
-                {renderTodos()}
+                {todos.length >  0 ? renderTodos() : <Table.Row><Table.HeaderCell>Do you have anything in mind to do?</Table.HeaderCell></Table.Row>}
                 </Table.Body>
                 </Table>
             </Segment>

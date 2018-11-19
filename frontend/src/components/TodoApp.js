@@ -3,7 +3,7 @@ import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
 import Header from './Header';
 import TodoModal from './TodoModal';
-import {getTodos, addTodo, removeTodo} from '../api/Api';
+import {getTodos, addTodo, removeTodo, toggleTodo} from '../api/Api';
 
 
 class TodoApp extends React.Component {
@@ -15,13 +15,6 @@ class TodoApp extends React.Component {
 
     componentDidMount(){
         this.fetchNewTodos();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
-    componentWillUnmount() {
     }
 
     fetchNewTodos = () => {
@@ -59,13 +52,16 @@ class TodoApp extends React.Component {
     }
 
     handleAddNewTodo = (task) => {
-        addTodo(task).then((res) => {
+        addTodo(task).then(() => {
             this.fetchNewTodos();
         });
     }
 
-    toggleTodo = (todo) => {
-        console.log(todo);
+    toggleTodoStatus = (id) => {
+        
+        toggleTodo(id).then(() => {
+            this.fetchNewTodos();
+        }).catch((err) => alert('error updating todo..'));
     }
 
     render() {
@@ -82,7 +78,7 @@ class TodoApp extends React.Component {
                     todos={this.state.todos}
                     handleDeleteTodos={this.handleDeleteTodos}
                     handleRemove={this.handleRemove}
-                    toggleTodo={this.toggleTodo}
+                    toggleTodoStatus={this.toggleTodoStatus}
 
                     />
                 <AddTodoForm 
