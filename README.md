@@ -2,10 +2,14 @@
 
 The app use mongodb for storage.
 
+## Live URL
+    > `https://thawing-eyrie-91521.herokuapp.com/
+
 
 ## MongoDB settings is at
 
-    > `backend/config/config.js`
+View it [live on heroku](https://thawing-eyrie-91521.herokuapp.com/)
+   
 
 You can set `MONGODB_URI` on your enviroment
 
