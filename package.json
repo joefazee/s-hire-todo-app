@@ -7,23 +7,44 @@
     "start": "export NODE_ENV=development && node backend/server.js",
     "test": "export NODE_ENV=test && ./node_modules/mocha/bin/mocha backend/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\"",
-    "start-watch": "nodemon --exec \"npm start\""
+    "start-watch": "nodemon --exec \"npm start\"",
+    "babel-build": "babel frontend/src/app.js --out-file=public/js/app.js --presets=env,react",
+    "build": "webpack --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "gulp": "^3.9.1",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "mongodb": "^3.1.6",
     "mongoose": "^5.3.1",
-    "validator": "^10.8.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-modal": "^2.2.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.83.0",
+    "validator": "^10.9.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
     "expect": "^1.20.2",
     "mocha": "^5.2.0",
-    "supertest": "^3.3.0"
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "supertest": "^3.3.0",
+    "webpack": "^3.1.0"
   }
 }

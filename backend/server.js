@@ -2,6 +2,7 @@ require('./config/config');
 
 const _ = require('lodash');
 const express = require('express');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
 
@@ -11,10 +12,17 @@ var {Todo, STATUS_COMPLETED, STATUS_PENDING} = require('./models/todo');
 var app = express();
 var port = process.env.PORT;
 
+// Register Handlebars view engine
+app.engine('.hbs', exphbs({ extname: '.hbs'}));
+// Use Handlebars view engine
+app.set('view engine', '.hbs');
+
 /**
  * Add middlewares
  */
+app.use(express.static('public'));
 app.use(bodyParser.json());
+
 
 
 /**
@@ -22,7 +30,7 @@ app.use(bodyParser.json());
  */
 
  app.get('/', (req, res) => {
-    res.send({'message': 'welcome'});
+    res.render('index');
  });
  
 
