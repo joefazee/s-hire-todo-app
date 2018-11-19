@@ -4,7 +4,7 @@
   "description": "Skillhire full stack test",
   "main": "backend/server.js",
   "scripts": {
-    "start": "export NODE_ENV=development && node backend/server.js",
+    "start": "node backend/server.js",
     "test": "export NODE_ENV=test && ./node_modules/mocha/bin/mocha backend/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\"",
     "start-watch": "nodemon --exec \"npm start\"",
