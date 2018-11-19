@@ -1,0 +1,27 @@
+* {
+   
+}
+
+tr.strikeout td:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    border-bottom: 1px solid #AAA;
+    width: 100%;
+  }
+  
+  tr.strikeout td:after {
+    content: "\00B7";
+    font-size: 1px;
+  }
+  
+
+  table { border-collapse: collapse; empty-cells: show; }
+
+td { position: relative; }
+
+tr.new-todo{color: #000;}
+.todo-time{
+    color: #AAA;
+}

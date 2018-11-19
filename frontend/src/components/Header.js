@@ -6,7 +6,7 @@ const Header = (props) => {
         <Menu>
             <Menu.Menu>
             <Menu.Item>
-            <h3>SkillHire todo app</h3>
+            <h3>SkillHire Todo App</h3>
             </Menu.Item>
             </Menu.Menu>
         </Menu>

@@ -4,13 +4,14 @@ import TodoList from './TodoList';
 import Header from './Header';
 import TodoModal from './TodoModal';
 import {getTodos, addTodo, removeTodo, toggleTodo} from '../api/Api';
-
+import { Loader , Segment, Dimmer} from 'semantic-ui-react'
 
 class TodoApp extends React.Component {
 
     state = {
         todos: [],
-        confirmDelete: undefined
+        confirmDelete: undefined,
+        networkOperation: false
     };
 
     componentDidMount(){
@@ -18,10 +19,27 @@ class TodoApp extends React.Component {
     }
 
     fetchNewTodos = () => {
+        this.networkOperationInProgress();
         getTodos()
             .then((res) => {
-            this.setState(() => ({todos: res}));
-            });
+                this.setState(() => ({todos: res}));
+            }).finally(() => this.networkOperationDone());
+    }
+
+    networkOperationInProgress = () => {
+        this.setState(() => {
+            return {
+                networkOperation: true
+            }
+        });
+    }
+
+    networkOperationDone = () => {
+        this.setState(() => {
+            return {
+                networkOperation: false
+            }
+        });
     }
 
     handleRemove = (id) => {
@@ -35,11 +53,13 @@ class TodoApp extends React.Component {
     }
 
     deleteTodoAfterConfirmation = (id) => {
+        this.networkOperationInProgress();
         if(this.state.confirmDelete) {
             removeTodo(id).then((todo) => {
-            this.fetchNewTodos();
-            this.handleCloseModal();
-            }).catch((err) => console.log(err));
+                this.fetchNewTodos();
+                this.handleCloseModal();
+            }).catch((err) => console.log(err))
+            .finally(() => this.networkOperationDone());
         }
     }
 
@@ -52,9 +72,10 @@ class TodoApp extends React.Component {
     }
 
     handleAddNewTodo = (task) => {
+        this.networkOperationInProgress();
         addTodo(task).then(() => {
             this.fetchNewTodos();
-        });
+        }).finally(() => this.networkOperationDone());;
     }
 
     toggleTodoStatus = (id) => {
@@ -74,15 +95,23 @@ class TodoApp extends React.Component {
                 confirmDelete={this.state.confirmDelete}  
                 handleCloseModal={this.handleCloseModal}
                 deleteTodoAfterConfirmation={this.deleteTodoAfterConfirmation} />
-                <TodoList 
-                    todos={this.state.todos}
-                    handleDeleteTodos={this.handleDeleteTodos}
-                    handleRemove={this.handleRemove}
-                    toggleTodoStatus={this.toggleTodoStatus}
 
-                    />
-                <AddTodoForm 
-                        handleAddNewTodo={this.handleAddNewTodo} />
+                <Dimmer.Dimmable as={Segment} dimmed={this.state.networkOperation}>
+                    <Dimmer active={this.state.networkOperation} inverted>
+                    <Loader>Loading</Loader>
+                    </Dimmer>
+              
+
+                    <TodoList 
+                        todos={this.state.todos}
+                        handleDeleteTodos={this.handleDeleteTodos}
+                        handleRemove={this.handleRemove}
+                        toggleTodoStatus={this.toggleTodoStatus}
+
+                        />
+                    <AddTodoForm 
+                            handleAddNewTodo={this.handleAddNewTodo} />
+                </Dimmer.Dimmable>
             </div>
         );
     }
