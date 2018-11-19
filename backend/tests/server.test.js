@@ -151,3 +151,32 @@ describe('DELETE /todos/:id', () => {
     }); 
    
 });
+
+
+describe('PATCH /todos/toggle/:id', () => {
+
+    it('should toggle the todo', (done) => {
+        var id = todos[1]._id.toHexString();
+        var baseTodo = todos[1];
+
+        request(app)
+            .patch(`/todos/toggle/${id}`)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.task).toBe(baseTodo.task);
+                expect(res.body.todo.updatedAt).toBeA('number');
+                expect(res.body.todo.status).toNotBe(baseTodo.status);
+            }).end(done);
+
+    });
+
+
+    it('should return 404 for non-object id', (done) => {
+        request(app)
+            .patch('/todos/123')
+            .expect(404)
+            .end(done);
+    }); 
+    
+    
+});
