@@ -52,6 +52,31 @@ app.get('/todos', (req, res) => {
 });
 
 
+app.patch('/todos/toggle/:id', (req, res) => {
+    var id = req.params.id;
+    if(!ObjectID.isValid(id)) {
+        return res.status(404).send({error: 'Id is not valid'});
+    }
+
+    Todo.findById(id).then((todo) => {
+        if(!todo) {
+            return res.status(404).send({error: 'Todo not found'});
+        }
+        todo.updatedAt = new Date().getTime();
+
+        if(todo.status === STATUS_COMPLETED) {
+            todo.status = STATUS_PENDING;
+        } else {
+            todo.status = STATUS_COMPLETED;
+        }
+
+        return todo.save();
+    }).then((todo) => {
+        return res.send({todo});
+    }).catch((err) => res.status(400).send());
+
+});
+
 app.patch('/todos/:id', (req, res) => {
 
     var id = req.params.id;
