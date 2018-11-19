@@ -8,7 +8,7 @@ tr.strikeout td:before {
     top: 50%;
     left: 40px;
     border-bottom: 1px solid #AAA;
-    width: 100%;
+    width: 90%;
   }
   
   tr.strikeout td:after {
@@ -24,4 +24,8 @@ td { position: relative; }
 tr.new-todo{color: #000;}
 .todo-time{
     color: #AAA;
+}
+
+.root-grid{
+    margin-top: 5% !important;
 }

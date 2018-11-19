@@ -4,7 +4,7 @@ import TodoList from './TodoList';
 import Header from './Header';
 import TodoModal from './TodoModal';
 import {getTodos, addTodo, removeTodo, toggleTodo} from '../api/Api';
-import { Loader , Segment, Dimmer} from 'semantic-ui-react'
+import { Loader , Segment, Dimmer, Grid} from 'semantic-ui-react'
 
 class TodoApp extends React.Component {
 
@@ -89,30 +89,32 @@ class TodoApp extends React.Component {
         
         return (
    
-            <div>
-                <Header />
-                <TodoModal 
-                confirmDelete={this.state.confirmDelete}  
-                handleCloseModal={this.handleCloseModal}
-                deleteTodoAfterConfirmation={this.deleteTodoAfterConfirmation} />
+            <Grid centered className="root-grid">
+               <Grid.Column width={6}>
+                    <Header />
+                    <TodoModal 
+                    confirmDelete={this.state.confirmDelete}  
+                    handleCloseModal={this.handleCloseModal}
+                    deleteTodoAfterConfirmation={this.deleteTodoAfterConfirmation} />
 
-                <Dimmer.Dimmable as={Segment} dimmed={this.state.networkOperation}>
-                    <Dimmer active={this.state.networkOperation} inverted>
-                    <Loader>Loading</Loader>
-                    </Dimmer>
-              
+                    <Dimmer.Dimmable as={Segment} dimmed={this.state.networkOperation}>
+                        <Dimmer active={this.state.networkOperation} inverted>
+                        <Loader>Loading</Loader>
+                        </Dimmer>
+                
 
-                    <TodoList 
-                        todos={this.state.todos}
-                        handleDeleteTodos={this.handleDeleteTodos}
-                        handleRemove={this.handleRemove}
-                        toggleTodoStatus={this.toggleTodoStatus}
+                        <TodoList 
+                            todos={this.state.todos}
+                            handleDeleteTodos={this.handleDeleteTodos}
+                            handleRemove={this.handleRemove}
+                            toggleTodoStatus={this.toggleTodoStatus}
 
-                        />
-                    <AddTodoForm 
-                            handleAddNewTodo={this.handleAddNewTodo} />
-                </Dimmer.Dimmable>
-            </div>
+                            />
+                        <AddTodoForm 
+                                handleAddNewTodo={this.handleAddNewTodo} />
+                    </Dimmer.Dimmable>
+                </Grid.Column>    
+            </Grid>
         );
     }
 }
