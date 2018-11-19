@@ -90,7 +90,7 @@ class TodoApp extends React.Component {
         return (
    
             <Grid centered className="root-grid">
-               <Grid.Column width={6}>
+               <Grid.Column tablet={12} computer={8} mobile={14}>
                     <Header />
                     <TodoModal 
                     confirmDelete={this.state.confirmDelete}  
