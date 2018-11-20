@@ -2,6 +2,9 @@
 
 The app use mongodb for storage.
 
+# Note on version
+You can check the `tag` for a redux and non-redux version. **`v1.1` is without redux** and **`v1.2` is with redux**
+
 ## Live URL
     > `https://thawing-eyrie-91521.herokuapp.com/
 
