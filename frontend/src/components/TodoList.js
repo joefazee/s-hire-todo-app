@@ -1,6 +1,7 @@
 import React from 'react';
 import Todo from './Todo';
-import { Icon, Label, Menu, Table, Segment } from 'semantic-ui-react'
+import { Table, Segment } from 'semantic-ui-react'
+import {connect} from 'react-redux';
 
 class TodoList extends React.Component {
     render() {
@@ -9,10 +10,7 @@ class TodoList extends React.Component {
              return todos.map((todo) => {
                return (
                   <Todo 
-                    key={todo._id} {...todo} 
-                    handleRemove={this.props.handleRemove}
-                    toggleTodoStatus={this.props.toggleTodoStatus}
-                     />  
+                    key={todo._id} {...todo} />  
                );
              });
           };
@@ -35,4 +33,11 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList;
+
+const mapStateToProps = (state) => {
+  return {
+      todos: state.todos
+  };
+}
+
+export default connect(mapStateToProps)(TodoList);

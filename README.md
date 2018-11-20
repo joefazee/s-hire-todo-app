@@ -16,7 +16,8 @@ You can set `MONGODB_URI` on your enviroment
 ## Installation
 
     $ npm install
-    $ npm run build
+    $ npm run build:prod
+    $ npm run start
     $ open http://localhost:3001/
 
 ## Running the backend test

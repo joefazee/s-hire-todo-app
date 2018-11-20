@@ -1,23 +1,33 @@
 import React from 'react';
 import { Icon, Table} from 'semantic-ui-react'
-var moment = require('moment');
+import {connect} from 'react-redux';
+import {startToggleTodo} from '../state/actions/todos';
+import {toggleConfirmDelete} from '../state/actions/events';
+
+
 
 const Todo  = (props) =>  {
-
-    var {task, _id, status,toggleTodoStatus, handleRemove} = props;
     return  (
 
-        <Table.Row className={status === 'completed' ? 'strikeout' :  'new-todo'}>
-            <Table.Cell onClick={() => {
-                toggleTodoStatus(_id);
+        <Table.Row className={props.status === 'completed' ? 'strikeout' :  'new-todo'}>
+            <Table.Cell onClick={() => {    
+                props.dispatch(startToggleTodo(props._id));
             }}><Icon name='trash' onClick={(e) => {
                 e.stopPropagation();
-                handleRemove(_id);
-            }} /> {task}</Table.Cell>
+               props.dispatch(toggleConfirmDelete(props._id));
+            }} /> {props.task}</Table.Cell>
       </Table.Row>
 
     );
    
 }
 
-export default Todo;
+const mapStateToProps = (state) => {
+    return {
+        confirmDelete: state.events.confirmDelete,
+        networkOperation: state.events.networkOperation
+
+    };
+  }
+  
+  export default connect(mapStateToProps)(Todo);

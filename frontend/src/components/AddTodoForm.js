@@ -1,35 +1,18 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {performAddNewTodo} from '../state/actions/todos';
 
-class AddTodoForm extends React.Component {
 
-    state = {
-        error: undefined
-    }
+const AddTodoForm  = (props) =>  (
 
-    constructor(props) {
-        super(props);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
-    }
-
-    handleKeyPress(e) {
+    <form onSubmit={(e) => e.preventDefault()} className='ui form'>
+    <input type="text" placeholder="Enter a todo" name="task" autoFocus onKeyPress={(e) => {
         if(e.key == 'Enter'){
-            const task = e.target.value.trim();
+            props.dispatch(performAddNewTodo(e.target.value.trim()));
             e.target.value = '';
-            const error = this.props.handleAddNewTodo(task);
-            this.setState(() => {
-                return {error};
-            });
-          }
-    }
-
-    render() {
-        return (
-            <form onSubmit={(e) => e.preventDefault()} className='ui form'>
-                {this.state.error && <p className="error">{this.state.error}</p>}
-                <input type="text" placeholder="Enter a todo" name="task" onKeyPress={this.handleKeyPress} />
-            </form>
-        );
-    }
-}
+        }
+    }} />
+    </form>
+)
  
-export default AddTodoForm;
+export default connect()(AddTodoForm);
