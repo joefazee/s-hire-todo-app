@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getTodos = () => {
+export const getTodos = (status="all") => {
     return new Promise((resolve, reject) => {
-        axios.get('/todos').then((res) => {
+        axios.get('/todos?status=' + status).then((res) => {
             resolve(res.data.todos);
         }).catch((err) => reject(err));
     }); 

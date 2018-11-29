@@ -45,7 +45,9 @@ app.use(bodyParser.json());
 
 
 app.get('/todos', (req, res) => {
-    Todo.find().sort({createdAt: -1}).then((todos) => {
+    
+    var query  = (req.query.status && req.query.status !== 'all') ? {status: req.query.status}: {};
+    Todo.find(query).sort({createdAt: -1}).then((todos) => {
         res.send({todos});
     }).catch((err) => res.status(400).send(err));
 

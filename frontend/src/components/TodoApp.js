@@ -1,6 +1,8 @@
 import React from  'react';
 import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
+import TodoStatus from './TodoStatus';
+
 import Header from './Header';
 import TodoModal from './TodoModal';
 import { Loader , Segment, Dimmer, Grid} from 'semantic-ui-react'
@@ -25,6 +27,8 @@ class TodoApp extends React.Component {
 
                         <TodoList />
                         <AddTodoForm />
+
+                        <TodoStatus />
                     </Dimmer.Dimmable>
                 </Grid.Column>    
             </Grid>

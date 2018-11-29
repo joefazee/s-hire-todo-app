@@ -52,3 +52,12 @@ export const performAddNewTodo = (task) => {
         }).finally(() => dispatch(toggleNetworkOperation()));
     };
 }
+
+export const startTodoWithStatus = (status) => {
+    return (dispatch) => {
+        dispatch(toggleNetworkOperation());
+        getTodos(status === true ? 'completed' : 'all').then((todos) => {
+            dispatch(addTodos(todos));
+        }).finally(() => dispatch(toggleNetworkOperation()));
+    }
+}
